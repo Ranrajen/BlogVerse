@@ -1,8 +1,19 @@
+// 1. Fixed the relative path typo (added the dot)
+import './App.css';
+import Header from './components/Header';
+import SearchBar from './components/SearchBar';
+
 function App() {
   return (
-    <>
-      <h1>starting the Blog writing website </h1>
-    </>
+    <div className='app'>     <Header />
+      <div className="screen-split">
+        <aside className="left-side">the side panel</aside>
+        <main className="right-side">
+          <SearchBar />
+          feed panel
+        </main>
+      </div>
+    </div>
   );
 }
 

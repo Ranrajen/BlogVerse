@@ -1,0 +1,47 @@
+/* Reset body to take up the full window height */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+/* Parent container setup */
+.screen-split {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* Side panel gets 40% width */
+.left-side {
+  flex: 40;
+  background-color: #038fd6; /* Light tint so you can see it */
+  padding: 20px;
+}
+
+/* Main feed panel gets 60% width */
+.right-side {
+  flex: 60;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 10px 18px;
+  cursor: pointer;
+}
