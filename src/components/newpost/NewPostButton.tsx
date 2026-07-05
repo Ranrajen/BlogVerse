@@ -1,7 +1,7 @@
 
-
+import './newPostButton.css'
 const NewPostButton =()=>{
-return <button>+ New Post </button>
+return <button className="new-add-btn">+ New Post </button>
     }
 
     export default NewPostButton;

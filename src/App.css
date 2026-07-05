@@ -10,21 +10,27 @@ body,
 /* Parent container setup */
 .screen-split {
   display: flex;
-  height: 100%;
-  width: 100%;
+  flex: 1;
 }
 
 /* Side panel gets 40% width */
 .left-side {
-  flex: 40;
+  /* flex: 40; */
+  width: 40%;
   background-color: #038fd6; /* Light tint so you can see it */
   padding: 20px;
 }
 
 /* Main feed panel gets 60% width */
 .right-side {
-  flex: 60;
+  /* flex: 60; */
+  width: 60%;
   background-color: #ffffff;
   padding: 20px;
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

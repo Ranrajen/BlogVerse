@@ -1,0 +1,20 @@
+.new-add-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.new-add-btn :hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.new-add-btn :active {
+  transform: scale(0.98s);
+}
