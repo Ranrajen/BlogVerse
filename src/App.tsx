@@ -4,6 +4,7 @@ import Header from './components/header/Header';
 import NewPostButton from './components/newpost/NewPostButton';
 import SearchBar from './components/search/SearchBar';
 import ReadingSpace from './components/readingSpace/ReadingSpace'
+import PostsFeed from './components/postsfeed/PostsFeed';
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
         <main className="right-side">
           <div className='top-bar'><SearchBar />
           <NewPostButton /></div>
-          feed panel
+         <PostsFeed/>
         </main>
       </div>
     </div>
