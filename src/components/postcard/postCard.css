@@ -1,0 +1,23 @@
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+}
+
+.post-author {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.post-category {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
