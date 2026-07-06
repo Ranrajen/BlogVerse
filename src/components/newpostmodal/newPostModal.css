@@ -1,0 +1,36 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+.modal {
+  width: 600px;
+  max-width: 90%;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.modal-body {
+  margin-top: 20px;
+}
