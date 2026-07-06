@@ -38,10 +38,20 @@ const App = () => {
 
 
   };
+
+  
 const handleDelete = (id: string) => {
-setPosts((prevPosts) =>
-  prevPosts.filter((post) => post.id !== id)
-);
+ setPosts((prevPosts) => {
+    const updatedPosts = prevPosts.filter(
+      (post) => post.id !== id
+    );
+
+    if (selectedPost?.id === id) {
+      setSelectedPost(updatedPosts[0] ?? null);
+    }
+
+    return updatedPosts;
+  });
 };
 
   return (
