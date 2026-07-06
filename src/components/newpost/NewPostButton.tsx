@@ -1,7 +1,15 @@
+import './newPostButton.css';
 
-import './newPostButton.css'
-const NewPostButton =()=>{
-return <button className="new-add-btn">+ New Post </button>
-    }
+interface NewPostButtonProps {
+  onClick: () => void;
+}
 
-    export default NewPostButton;
+const NewPostButton = ({ onClick }: NewPostButtonProps) => {
+  return (
+    <button className="new-add-btn" onClick={onClick}>
+      + New Post{' '}
+    </button>
+  );
+};
+
+export default NewPostButton;
