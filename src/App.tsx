@@ -12,13 +12,9 @@ import { dummyPosts } from './data/dummyPosts';
 
 import NewPostModal from './components/newpostmodal/NewPostModal';
 
-
-
-
 const App = () => {
-  const [selectedPost , setselectedPost] = useState<Post | null>(dummyPosts[0])
-  const [isModalOpen, setIsModalOpen] =
-  useState(false);
+  const [selectedPost, setselectedPost] = useState<Post | null>(dummyPosts[0]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="app">
       {' '}
@@ -26,20 +22,20 @@ const App = () => {
       <div className="screen-split">
         <aside className="left-side">
           {/* the side panel */}
-          <ReadingSpace selectedPost={selectedPost}/>
+          <ReadingSpace selectedPost={selectedPost} />
         </aside>
         <main className="right-side">
           <div className="top-bar">
             <SearchBar />
-            <NewPostButton onClick={()=>setIsModalOpen(true)} />
+            <NewPostButton onClick={() => setIsModalOpen(true)} />
           </div>
-          <PostsFeed onSelectPost={setselectedPost}/>
+          <PostsFeed onSelectPost={setselectedPost} />
         </main>
       </div>
       <NewPostModal
-  isOpen={isModalOpen}
-  onClose={() => setIsModalOpen(false)}
-/>
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
