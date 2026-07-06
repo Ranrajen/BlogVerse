@@ -13,11 +13,29 @@ import { dummyPosts } from './data/dummyPosts';
 import NewPostModal from './components/newpostmodal/NewPostModal';
 
 const App = () => {
+  const [posts, setPosts] = useState<Post[]>(dummyPosts);
   const [selectedPost, setselectedPost] = useState<Post | null>(dummyPosts[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handlePublish = (title: string, content: string) => {
+    const newPost: Post = {
+    id: Date.now().toString(),
+    title,
+    content,
+    author: 'Rajen',
+};
+ setPosts([
+    newPost,
+    ...posts,
+  ]);
+
+  setselectedPost(newPost);
+
+  setIsModalOpen(false);
+
+
+  };
   return (
     <div className="app">
-      {' '}
       <Header />
       <div className="screen-split">
         <aside className="left-side">
@@ -29,12 +47,13 @@ const App = () => {
             <SearchBar />
             <NewPostButton onClick={() => setIsModalOpen(true)} />
           </div>
-          <PostsFeed onSelectPost={setselectedPost} />
+          <PostsFeed posts={posts} onSelectPost={setselectedPost} />
         </main>
       </div>
       <NewPostModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onPublish={handlePublish}
       />
     </div>
   );

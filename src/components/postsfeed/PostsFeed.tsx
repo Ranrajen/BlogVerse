@@ -1,17 +1,18 @@
 import './postFeeds.css'
-import { dummyPosts } from '../../data/dummyPosts'
+// import { dummyPosts } from '../../data/dummyPosts'
 import { Postcard } from '../postcard/PostCard'
 import type { Post } from '../../types/Post'
 
-interface PostFeedProps {
+interface PostsFeedProps {
+  posts : Post[];
   onSelectPost : (post :Post)=> void;
 }
 
-const PostsFeed = ({onSelectPost }: PostFeedProps) => {
+const PostsFeed = ({posts, onSelectPost }: PostsFeedProps) => {
   return (
     <section className='post-feed'>
         <h2>POSTS</h2>
-       {dummyPosts.map((post)=>(<Postcard key={post.id} post={post} onSelect={onSelectPost}/>))} 
+       {posts.map((post)=>(<Postcard key={post.id} post={post} onSelect={onSelectPost}/>))} 
        {/* here post var */}
     </section>
   )
