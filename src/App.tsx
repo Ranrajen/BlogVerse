@@ -14,26 +14,36 @@ import NewPostModal from './components/newpostmodal/NewPostModal';
 
 const App = () => {
   const [posts, setPosts] = useState<Post[]>(dummyPosts);
-  const [selectedPost, setselectedPost] = useState<Post | null>(dummyPosts[0]);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(dummyPosts[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handlePublish = (title: string, content: string) => {
     const newPost: Post = {
-    id: Date.now().toString(),
-    title,
-    content,
-    author: 'Rajen',
-};
- setPosts([
-    newPost,
-    ...posts,
-  ]);
+   id: Date.now().toString(),
+  title,
+  content,
+  category: "General",
+  tags: [],
+  author: "Rajen",
+  createdAt: new Date().toLocaleDateString(),
+  updatedAt: new Date().toLocaleDateString(),
+  };
+ setPosts((prevPosts) => [
+  newPost,
+  ...prevPosts,
+]);
 
-  setselectedPost(newPost);
+  setSelectedPost(newPost);
 
   setIsModalOpen(false);
 
 
   };
+const handleDelete = (id: string) => {
+setPosts((prevPosts) =>
+  prevPosts.filter((post) => post.id !== id)
+);
+};
+
   return (
     <div className="app">
       <Header />
@@ -47,7 +57,8 @@ const App = () => {
             <SearchBar />
             <NewPostButton onClick={() => setIsModalOpen(true)} />
           </div>
-          <PostsFeed posts={posts} onSelectPost={setselectedPost} />
+          <PostsFeed posts={posts} onSelectPost={setSelectedPost}      onDeletePost={handleDelete}
+/>
         </main>
       </div>
       <NewPostModal
