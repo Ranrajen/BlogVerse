@@ -6,9 +6,11 @@ interface NewPostModalProps {
   onClose: () => void;
 
   onPublish: (title: string, content: string) => void;
+  mode: "create" | "edit";
+  post: Post | null
 }
 
-const NewPostModal = ({ isOpen, onClose, onPublish }: NewPostModalProps) => {
+const NewPostModal = ({ isOpen, onClose, onPublish, mode }: NewPostModalProps) => {
   // ---------------usestate--------
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -40,7 +42,9 @@ const NewPostModal = ({ isOpen, onClose, onPublish }: NewPostModalProps) => {
     <div className="modal-overlay" onClick={handleCancel}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Create New Post</h2>
+          <h2>{
+mode === "create" ? "Create New Post": "Edit Post"}
+</h2>
 
           <button className="close-btn" onClick={handleCancel}>
             ✕
@@ -81,7 +85,9 @@ const NewPostModal = ({ isOpen, onClose, onPublish }: NewPostModalProps) => {
           </button>
 
           <button className="publish-btn" onClick={handlePublish}>
-            Publish
+            {mode === "create"
+    ? "Publish"
+    : "Save Changes"}
           </button>
         </div>
       </div>
