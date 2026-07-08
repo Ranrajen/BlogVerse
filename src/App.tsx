@@ -16,6 +16,19 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>(dummyPosts);
   const [selectedPost, setSelectedPost] = useState<Post | null>(dummyPosts[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+const [searchQuery , setSearchQuery] = useState('')
+
+// --- editing useState
+const [editingPost , setEditingPost] =useState<Post |null>(null);
+
+// -- for the filter 
+const filteredPosts = posts.filter( (post) =>{
+  return(
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())||
+    post.content.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+})
+
   const handlePublish = (title: string, content: string) => {
     const newPost: Post = {
    id: Date.now().toString(),
@@ -64,10 +77,10 @@ const handleDelete = (id: string) => {
         </aside>
         <main className="right-side">
           <div className="top-bar">
-            <SearchBar />
+            <SearchBar value={searchQuery} onChange={setSearchQuery} />
             <NewPostButton onClick={() => setIsModalOpen(true)} />
           </div>
-          <PostsFeed posts={posts} onSelectPost={setSelectedPost}      onDeletePost={handleDelete}
+          <PostsFeed posts={filteredPosts} onSelectPost={setSelectedPost}      onDeletePost={handleDelete}
 />
         </main>
       </div>
@@ -75,6 +88,8 @@ const handleDelete = (id: string) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onPublish={handlePublish}
+        mode ={editingPost ?"edit" :"create"}
+        post={editingPost}
       />
     </div>
   );
