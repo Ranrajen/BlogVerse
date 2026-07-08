@@ -1,19 +1,37 @@
 import './newPostModal.css';
-import { useState } from 'react';
+import type { Post } from '../../types/Post';
+import { useState ,useEffect } from 'react';
 
 interface NewPostModalProps {
   isOpen: boolean;
   onClose: () => void;
 
-  onPublish: (title: string, content: string) => void;
+  onPublish: (title: string, content: string , postId ? :number) => void;
   mode: "create" | "edit";
-  post: Post | null
+  post: Post | null 
 }
 
-const NewPostModal = ({ isOpen, onClose, onPublish, mode }: NewPostModalProps) => {
+const NewPostModal = ({ isOpen, onClose, onPublish, mode , post }: NewPostModalProps) => {
   // ---------------usestate--------
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  // useeffecct for the 
+
+
+// update local form state when modal opens or when editing a different post
+// eslint-disable-next-line react-hooks/set-state-in-effect
+useEffect(() => {
+  if (mode === "edit" && post) {
+    setTitle(post.title);
+    setContent(post.content);
+  }
+
+  if (mode === "create") {
+    setTitle('');
+    setContent('');
+  }
+}, [mode, post, isOpen]);
 
   // resent function
   const resetForm = () => {
@@ -35,6 +53,7 @@ const NewPostModal = ({ isOpen, onClose, onPublish, mode }: NewPostModalProps) =
 
     onPublish(title, content);
     resetForm();
+    onClose();
   };
   if (!isOpen) return null;
 
