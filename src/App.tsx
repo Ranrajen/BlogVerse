@@ -31,21 +31,33 @@ const App = () => {
 
   const handlePublish = (title: string, content: string, postId?: string) => {
     if (postId) {
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post.id === postId
-            ? {
-                ...post,
-                title,
-                content,
-                updatedAt: new Date().toLocaleDateString(),
-              }
-            : post
-        )
-      );
+  setPosts(prevPosts =>
+    prevPosts.map(post =>
+      post.id === postId
+        ? {
+            ...post,
+            title,
+            content,
+            updatedAt: new Date().toLocaleDateString(),
+          }
+        : post
+    )
+  );
 
-      return;
-    }
+  if (selectedPost?.id === postId) {
+    setSelectedPost({
+      ...selectedPost,
+      title,
+      content,
+      updatedAt: new Date().toLocaleDateString(),
+    });
+  }
+
+  setEditingPost(null);
+  setIsModalOpen(false);
+
+  return;
+}
 
     const newPost: Post = {
       id: Date.now().toString(),
