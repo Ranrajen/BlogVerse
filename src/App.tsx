@@ -16,56 +16,65 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>(dummyPosts);
   const [selectedPost, setSelectedPost] = useState<Post | null>(dummyPosts[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-const [searchQuery , setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('');
 
-// --- editing useState
-const [editingPost , setEditingPost] =useState<Post |null>(null);
+  // --- editing useState
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-// -- for the filter 
-const filteredPosts = posts.filter( (post) =>{
-  return(
-    post.title.toLowerCase().includes(searchQuery.toLowerCase())||
-    post.content.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-})
-
-  const handlePublish = (title: string, content: string) => {
-    const newPost: Post = {
-   id: Date.now().toString(),
-  title,
-  content,
-  category: "General",
-  tags: [],
-  author: "Rajen",
-  createdAt: new Date().toLocaleDateString(),
-  updatedAt: new Date().toLocaleDateString(),
-  };
- setPosts((prevPosts) => [
-  newPost,
-  ...prevPosts,
-]);
-
-  setSelectedPost(newPost);
-
-  setIsModalOpen(false);
-
-
-  };
-
-  
-const handleDelete = (id: string) => {
- setPosts((prevPosts) => {
-    const updatedPosts = prevPosts.filter(
-      (post) => post.id !== id
+  // -- for the filter
+  const filteredPosts = posts.filter((post) => {
+    return (
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchQuery.toLowerCase())
     );
+  });
 
-    if (selectedPost?.id === id) {
-      setSelectedPost(updatedPosts[0] ?? null);
+  const handlePublish = (title: string, content: string, postId?: string) => {
+    if (postId) {
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                title,
+                content,
+                updatedAt: new Date().toLocaleDateString(),
+              }
+            : post
+        )
+      );
+
+      return;
     }
 
-    return updatedPosts;
-  });
-};
+    const newPost: Post = {
+      id: Date.now().toString(),
+      title,
+      content,
+      category: 'General',
+      tags: [],
+      author: 'Rajen',
+      createdAt: new Date().toLocaleDateString(),
+      updatedAt: new Date().toLocaleDateString(),
+    };
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
+
+    setSelectedPost(newPost);
+
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = (id: string) => {
+    setPosts((prevPosts) => {
+      const updatedPosts = prevPosts.filter((post) => post.id !== id);
+
+      if (selectedPost?.id === id) {
+        setSelectedPost(updatedPosts[0] ?? null);
+      }
+
+      return updatedPosts;
+    });
+  };
 
   return (
     <div className="app">
@@ -78,17 +87,25 @@ const handleDelete = (id: string) => {
         <main className="right-side">
           <div className="top-bar">
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
-            <NewPostButton onClick={() => setIsModalOpen(true)} />
+            <NewPostButton
+              onClick={() => {
+                setEditingPost(null);
+                setIsModalOpen(true);
+              }}
+            />
           </div>
-          <PostsFeed posts={filteredPosts} onSelectPost={setSelectedPost}      onDeletePost={handleDelete}
-/>
+          <PostsFeed
+            posts={filteredPosts}
+            onSelectPost={setSelectedPost}
+            onDeletePost={handleDelete}
+          />
         </main>
       </div>
       <NewPostModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onPublish={handlePublish}
-        mode ={editingPost ?"edit" :"create"}
+        mode={editingPost ? 'edit' : 'create'}
         post={editingPost}
       />
     </div>
