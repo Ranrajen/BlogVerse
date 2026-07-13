@@ -6,17 +6,34 @@ import SearchBar from './components/search/SearchBar';
 import ReadingSpace from './components/readingSpace/ReadingSpace';
 import PostsFeed from './components/postsfeed/PostsFeed';
 
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import type { Post } from './types/Post';
 import { dummyPosts } from './data/dummyPosts';
 
 import NewPostModal from './components/newpostmodal/NewPostModal';
 
 const App = () => {
-  const [posts, setPosts] = useState<Post[]>(dummyPosts);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(dummyPosts[0]);
+  const [posts, setPosts] = useState<Post[]>(() => {
+  const savedPosts = localStorage.getItem("blogverse-posts");
+
+  if (savedPosts) {
+    return JSON.parse(savedPosts);
+  }
+
+  return dummyPosts;
+});;
+  const [selectedPost, setSelectedPost] = useState<Post | null>(posts[0] ?? null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+
+useEffect(() => {
+  localStorage.setItem(
+    "blogverse-posts",
+    JSON.stringify(posts)
+  );
+}, [posts]);
+
 
   // --- editing useState
   const [editingPost, setEditingPost] = useState<Post | null>(null);
@@ -88,6 +105,11 @@ const App = () => {
     });
   };
 
+const handleEdit = (post: Post) => {
+  setEditingPost(post);
+  setIsModalOpen(true);
+};
+
   return (
     <div className="app">
       <Header />
@@ -110,6 +132,7 @@ const App = () => {
             posts={filteredPosts}
             onSelectPost={setSelectedPost}
             onDeletePost={handleDelete}
+             onEditPost={handleEdit}
           />
         </main>
       </div>

@@ -6,7 +6,7 @@ interface NewPostModalProps {
   isOpen: boolean;
   onClose: () => void;
 
-  onPublish: (title: string, content: string , postId ? :number) => void;
+  onPublish: (title: string, content: string , postId ? :string) => void;
   mode: "create" | "edit";
   post: Post | null 
 }
@@ -45,13 +45,22 @@ useEffect(() => {
   };
  
 
+  // seprate the validation, publish , cleanup
   const handlePublish = () => {
  if (!title.trim() || !content.trim()) {
     alert('Please fill in both Title and Content.');
     return;
   }
 
-    onPublish(title, content);
+
+  if(mode==="edit" && post)
+  {
+    onPublish(title , content, post.id);
+  }
+  else {
+     onPublish(title, content);
+  }
+    // onPublish(title, content);
     resetForm();
     onClose();
   };
